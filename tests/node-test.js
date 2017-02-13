@@ -1,5 +1,8 @@
-import { expect } from 'chai';
-import filterMe from '../scripts/filter'
+import { assert } from 'chai';
+import node from '../scripts/node'
 
-describe('TDD with filter', () => {
-})
+// describe('Node', () => {
+//   it('should be a function', () => {
+//     assert.isFunction(node)
+//   })
+// })
