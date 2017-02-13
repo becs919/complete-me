@@ -27,7 +27,7 @@ describe('Trie, aka completeMe', () => {
 
   })
 
-  it('should have a suggest function', () => {
+  it('should have a suggest function and return suggestions that match', () => {
     const completion = new CompleteMe
 
     completion.insert('pizza')
@@ -36,6 +36,16 @@ describe('Trie, aka completeMe', () => {
     assert.isFunction(completion.suggest)
     assert.deepEqual(completion.suggest('piz'), ['pizza'])
     assert.deepEqual(completion.suggest('s'), ['suh'])
+  })
+
+  it('should not return a match if there is not one', () => {
+    const completion = new CompleteMe
+
+    completion.insert('pizza')
+    completion.insert('suh')
+
+    assert.isFunction(completion.suggest)
+    assert.deepEqual(completion.suggest('l'), [])
   })
 
 })
