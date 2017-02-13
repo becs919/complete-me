@@ -1,6 +1,10 @@
 import { assert } from 'chai';
 import CompleteMe from '../scripts/trie'
 
+const fs = require('fs');
+const text = "/usr/share/dict/words"
+
+
 
 describe('Trie, aka completeMe', () => {
 
@@ -11,17 +15,18 @@ describe('Trie, aka completeMe', () => {
   it('should have an insert function that takes in a word', () => {
     const completion = new CompleteMe
 
-    completion.insert('pizza')
     assert.isFunction(completion.insert)
+    completion.insert('pizza')
     assert.deepEqual(completion.array, ['pizza'])
   })
 
   it('should have a count function that counts the words', () => {
     const completion = new CompleteMe
 
-    completion.insert('pizza')
     assert.isFunction(completion.count)
+    completion.insert('pizza')
     assert.equal(completion.count(), 1)
+
     completion.insert('suh')
     assert.equal(completion.count(), 2)
 
@@ -48,4 +53,25 @@ describe('Trie, aka completeMe', () => {
     assert.deepEqual(completion.suggest('l'), [])
   })
 
+  it('should have a dictionary', () => {
+    const completion = new CompleteMe
+    let dictionary = fs.readFileSystem(text).toString('utf-8').trim().split('\n')
+    completion.populate(dictionary)
+    assert.equal(completion.countDictionary(), 235886)
+    console.log();
+  })
+
 })
+
+
+
+
+// let dictionary = fs.readFileSystem(text).toString('utf-8').trim().split('\n')
+//
+// completion.populate(dictionary)
+//
+// completion.count
+// => 235886
+//
+// completion.suggest("piz")
+// => ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]
