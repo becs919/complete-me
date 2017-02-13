@@ -1,5 +1,7 @@
-const filterMe = (array) => {
-  return array
+class node {
+  constructor() {
+
+  }
 }
 
-export default filterMe
+export default node
