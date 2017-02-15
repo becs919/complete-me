@@ -1,8 +1,9 @@
 import { assert } from 'chai';
-import node from '../scripts/node'
+import Node from '../scripts/Node'
 
-// describe('Node', () => {
-//   it('should be a function', () => {
-//     assert.isFunction(node)
-//   })
-// })
+describe('Node', () => {
+  it('should be a function', () => {
+    assert.isFunction(Node)
+  })
+
+})
