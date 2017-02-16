@@ -1,6 +1,4 @@
-// let dictionary = fs.readFileSystem(text).toString('utf-8').trim().split('\n')
-
-import Node from '../scripts/Node.js'
+import Node from '../scripts/Node.js';
 
 class CompleteMe {
   constructor() {
@@ -11,67 +9,77 @@ class CompleteMe {
 
   insert (data) {
     let wordArray = data.split('');
-
     let currentNode = this.root;
 
-    wordArray.forEach((letter, index) => {
-      if (currentNode.children[letter]) {
+    wordArray.forEach( letter => {
 
-        return currentNode = currentNode.children[letter];
+      if (!currentNode.children[letter]) {
+        currentNode.children[letter] = new Node(letter);
       }
 
-        currentNode.children[letter] = new Node(letter);
-        return currentNode = currentNode.children[letter]
-    })
+      currentNode = currentNode.children[letter];
+    });
 
     currentNode.wordEnd = true;
     this.length++;
-  };
+  }
 
 
   count () {
-    return this.length
-  };
+    return this.length;
+  }
 
 
   suggest (string) {
     let currentNode = this.root;
     let stringArray = string.split('');
 
-    stringArray.forEach((letter, index) => {
-      if (currentNode.children[letter]) {
-        currentNode = currentNode.children[letter]
+    for (var i = 0; i < stringArray.length; i++) {
+      if (currentNode.children[stringArray[i]]) {
+        currentNode = currentNode.children[stringArray[i]];
+
       } else {
-        return null;
+        return [];
       }
-    })
+    }
     this.words(currentNode, string);
   }
 
+  // words(floNode, 'flo')
+
+  // returning an array of the suggestions
   words (node, string) {
+    // checks node to see if it is the last letter of a complete wordEnd
+    // if node is a complete word, push into suggestions array
     if (node.wordEnd) {
-      this.suggestions.push(string)
-    }
-    let nodeKeys = Object.keys(node.children)
-    nodeKeys.forEach((letter) => {
-      let nextNode = node.children[letter]
-      this.words(nextNode, (string + letter));
-    })
-  };
-
-  // suggest (query) {
-  //   return this.array.filter((el) =>
-  //    el.toLowerCase().indexOf(query.toLowerCase()) > -1
-  //   )
-  // }
-
-
-
-
-  populate () {
+      this.suggestions.push(string);
     }
 
-  countDictionary () {
+    // find node's child letters
+
+   // { w: Node, p: Node }
+    let nodeKeys = Object.keys(node.children); // [ 'w', 'p' ]
+
+    // loop through each child letter
+    nodeKeys.forEach( letter => {
+      // console.log(letter); // 'w'
+
+      // child node, and move to child node (i.e. flowNode)
+      let nextNode = node.children[letter];
+
+      // recursion!!!
+      // string === flo
+      // letter === w
+
+      this.words(nextNode, string + letter);
+    });
+  }
+
+
+  populate (array) {
+    array.forEach( word => {
+      this.insert(word);
+    });
   }
 
 }
