@@ -55,8 +55,11 @@ describe('Trie, aka completeMe', () => {
     completion.insert('pizza')
     completion.insert('suh')
 
-    assert.isFunction(completion.suggest)
-    assert.deepEqual(completion.suggest('piz'), ['pizza'])
+    // assert.isFunction(completion.suggest)
+
+    completion.suggest('piz')
+
+    assert.deepEqual(completion.suggestions, ['pizza'])
     // assert.deepEqual(completion.suggest('s'), ['suh'])
   });
 
@@ -65,10 +68,10 @@ describe('Trie, aka completeMe', () => {
 
     completion.insert('pizza')
     completion.insert('suh')
-    console.log(completion);
 
-    assert.isFunction(completion.suggest)
-    assert.deepEqual(completion.suggest('l'), [])
+    completion.suggest('l')
+
+    assert.deepEqual(completion.suggestions, [])
   })
 
   it.skip('should have a dictionary', () => {
