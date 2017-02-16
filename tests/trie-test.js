@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import CompleteMe from '../scripts/trie';
 const fs = require('fs');
 
+
 describe('Trie, a.k.a completeMe', () => {
 
   it('should be a constructor', () => {
@@ -64,9 +65,10 @@ describe('Trie, a.k.a completeMe', () => {
     completion.insert('pizza');
     completion.insert('suh');
 
-    completion.words('');
+    // console.log();
+    // completion.words(completion.root.children.p.children.i.children.z.children.z, 'pizz');
 
-    assert.deepEqual(completion.suggestions, ['pizza']);
+    assert.deepEqual(completion.words(completion.root, 'p'), ['pizza']);
   });
 
   it('should not return a match if there is not one', () => {
@@ -147,5 +149,58 @@ describe('Trie, a.k.a completeMe', () => {
     assert.property(completion.root.children.q.children, 'o');
     assert.property(completion.root.children.q.children, 'u');
   });
+
+  it('should have a find node function', () => {
+    const completion = new CompleteMe();
+    const text = '/usr/share/dict/words';
+
+    let dictionary = fs.readFileSync(text).toString('utf-8').trim().split('\n');
+
+    completion.populate(dictionary);
+
+    assert.isFunction(completion.find);
+
+    assert.equal(completion.find('pizza'), completion.root.children.p.children.i.children.z.children.z.children.a);
+  });
+
+
+  it('should have a select function that allows you to select suggestions', () => {
+    const completion = new CompleteMe();
+    const text = '/usr/share/dict/words';
+
+    let dictionary = fs.readFileSync(text).toString('utf-8').trim().split('\n');
+
+    completion.populate(dictionary);
+
+    completion.selected('pizza');
+
+    assert.isFunction(completion.selected);
+    assert.equal( completion.root.children.p.children.i.children.z.children.z.children.a.preference, 1);
+
+  });
+
+
+  it.only('should have a select function that allows you to select suggestions', () => {
+    const completion = new CompleteMe();
+    const text = '/usr/share/dict/words';
+
+    let dictionary = fs.readFileSync(text).toString('utf-8').trim().split('\n');
+
+    completion.populate(dictionary);
+
+    completion.suggest('piz');
+
+    assert.deepEqual(completion.suggestions, ['pize', 'pizza', 'pizzeria', 'pizzicato', 'pizzle']);
+
+    completion.selected('pizza');
+    completion.suggest('piz')
+
+    assert.deepEqual(completion.suggestions, ['pizza', 'pize', 'pizzeria', 'pizzicato', 'pizzle']);
+
+    assert.isFunction(completion.selected);
+    assert.equal( completion.root.children.p.children.i.children.z.children.z.children.a.preference, 1);
+
+  });
+
 
 });

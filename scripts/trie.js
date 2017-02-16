@@ -45,31 +45,23 @@ class CompleteMe {
     this.words(currentNode, string);
   }
 
-  // words(floNode, 'flo')
 
-  // returning an array of the suggestions
   words (node, string) {
-    // checks node to see if it is the last letter of a complete wordEnd
-    // if node is a complete word, push into suggestions array
-    if (node.wordEnd) {
+
+    if (node.wordEnd && node.preference !== 0) {
+      console.log('not 0');
+      this.suggestions.unshift(string);
+    } else if (node.wordEnd && node.preference === 0) {
+      console.log('is 0');
       this.suggestions.push(string);
     }
 
-    // find node's child letters
 
-   // { w: Node, p: Node }
-    let nodeKeys = Object.keys(node.children); // [ 'w', 'p' ]
+    let nodeKeys = Object.keys(node.children);
 
-    // loop through each child letter
     nodeKeys.forEach( letter => {
-      // console.log(letter); // 'w'
 
-      // child node, and move to child node (i.e. flowNode)
       let nextNode = node.children[letter];
-
-      // recursion!!!
-      // string === flo
-      // letter === w
 
       this.words(nextNode, string + letter);
     });
@@ -81,6 +73,31 @@ class CompleteMe {
       this.insert(word);
     });
   }
+
+
+  find (data) {
+    let currentNode = this.root;
+    let letterArray = data.split('');
+
+    while (letterArray !== []) {
+      let arrayLetter = letterArray.shift();
+
+      if (currentNode.children[arrayLetter]) {
+        currentNode = currentNode.children[arrayLetter];
+      }
+
+      if (letterArray.length === 0) {
+        return currentNode;
+      }
+    }
+  }
+
+
+  selected (sugg) {
+    let node = this.find(sugg);
+    node.preference++;
+  }
+
 
 }
 

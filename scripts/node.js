@@ -4,6 +4,7 @@ class Node {
     this.children = {};
     this.wordEnd = false;
     this.value = '';
+    this.preference = false;
   }
 }
 
