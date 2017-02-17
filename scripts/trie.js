@@ -1,6 +1,4 @@
-// let dictionary = fs.readFileSystem(text).toString('utf-8').trim().split('\n')
-
-import Node from '../scripts/Node.js'
+import Node from '../scripts/Node.js';
 
 class CompleteMe {
   constructor() {
@@ -11,68 +9,98 @@ class CompleteMe {
 
   insert (data) {
     let wordArray = data.split('');
-
     let currentNode = this.root;
 
-    wordArray.forEach((letter, index) => {
-      if (currentNode.children[letter]) {
+    wordArray.forEach( letter => {
 
-        return currentNode = currentNode.children[letter];
+      if (!currentNode.children[letter]) {
+        currentNode.children[letter] = new Node(letter);
       }
 
-        currentNode.children[letter] = new Node(letter);
-        return currentNode = currentNode.children[letter]
-    })
+      currentNode = currentNode.children[letter];
+    });
 
     currentNode.wordEnd = true;
     this.length++;
-  };
+  }
 
 
   count () {
-    return this.length
-  };
+    // let currentNode = this.root;
+    //
+    // while (currentNode.children) {
+    //   currentNode = currentNode.children;
+    //   if (currentNode.endWord === true) {
+    //     console.log(currentNode);
+    //
+    //     this.length++;
+    //   }
+    // }
+    return this.length;
+  }
 
 
   suggest (string) {
     let currentNode = this.root;
-    let stringArray = string.split('');
+    let lettersArray = string.split('');
 
-    stringArray.forEach((letter, index) => {
-      if (currentNode.children[letter]) {
-        currentNode = currentNode.children[letter]
+    for (var i = 0; i < lettersArray.length; i++) {
+      if (currentNode.children[lettersArray[i]]) {
+        currentNode = currentNode.children[lettersArray[i]];
       } else {
-        return null;
+        return [];
       }
-    })
+    }
+
     this.words(currentNode, string);
   }
 
+
   words (node, string) {
     if (node.wordEnd) {
-      this.suggestions.push(string)
+      this.suggestions.push(string);
+
     }
-    let nodeKeys = Object.keys(node.children)
-    nodeKeys.forEach((letter) => {
-      let nextNode = node.children[letter]
-      this.words(nextNode, (string + letter));
-    })
-  };
+    let nodeKeys = Object.keys(node.children);
+    nodeKeys.forEach( letter => {
 
-  // suggest (query) {
-  //   return this.array.filter((el) =>
-  //    el.toLowerCase().indexOf(query.toLowerCase()) > -1
-  //   )
-  // }
+      let nextNode = node.children[letter];
 
-
-
-
-  populate () {
-    }
-
-  countDictionary () {
+      this.words(nextNode, string + letter);
+    });
   }
+
+
+  populate (array) {
+    array.forEach( word => {
+      this.insert(word);
+    });
+  }
+
+
+  find (data) {
+    let currentNode = this.root;
+    let letterArray = data.split('');
+
+    while (letterArray !== []) {
+      let arrayLetter = letterArray.shift();
+
+      if (currentNode.children[arrayLetter]) {
+        currentNode = currentNode.children[arrayLetter];
+      }
+
+      if (letterArray.length === 0) {
+        return currentNode;
+      }
+    }
+  }
+
+  selected (string) {
+    let prefString = this.find(string);
+    prefString.preference++;
+  }
+
+
 
 }
 
