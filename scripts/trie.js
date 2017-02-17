@@ -26,42 +26,42 @@ class CompleteMe {
 
 
   count () {
-    let currentNode = this.root;
-
-    if (currentNode.children) {
-      currentNode = currentNode.children;
-      if (currentNode.wordEnd === true) {
-        this.length++;
-      }
-    }
+    // let currentNode = this.root;
+    //
+    // while (currentNode.children) {
+    //   currentNode = currentNode.children;
+    //   if (currentNode.endWord === true) {
+    //     console.log(currentNode);
+    //
+    //     this.length++;
+    //   }
+    // }
     return this.length;
   }
 
 
   suggest (string) {
     let currentNode = this.root;
-    let stringArray = string.split('');
+    let lettersArray = string.split('');
 
-    for (var i = 0; i < stringArray.length; i++) {
-      if (currentNode.children[stringArray[i]]) {
-        currentNode = currentNode.children[stringArray[i]];
-
+    for (var i = 0; i < lettersArray.length; i++) {
+      if (currentNode.children[lettersArray[i]]) {
+        currentNode = currentNode.children[lettersArray[i]];
       } else {
         return [];
       }
     }
+
     this.words(currentNode, string);
   }
 
 
   words (node, string) {
-
     if (node.wordEnd) {
       this.suggestions.push(string);
+
     }
-
     let nodeKeys = Object.keys(node.children);
-
     nodeKeys.forEach( letter => {
 
       let nextNode = node.children[letter];
@@ -93,6 +93,11 @@ class CompleteMe {
         return currentNode;
       }
     }
+  }
+
+  selected (string) {
+    let prefString = this.find(string);
+    prefString.preference++;
   }
 
 

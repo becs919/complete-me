@@ -71,6 +71,7 @@ describe('Trie, a.k.a completeMe', () => {
     assert.deepEqual(completion.suggestions, []);
   });
 
+
   it('should take an array', () => {
     const completion = new CompleteMe();
 
@@ -84,6 +85,7 @@ describe('Trie, a.k.a completeMe', () => {
     assert.property(completion.root.children.h.children, 'e');
 
   });
+
 
   it('should populate a dictionary', () => {
     const completion = new CompleteMe();
@@ -139,6 +141,7 @@ describe('Trie, a.k.a completeMe', () => {
     assert.property(completion.root.children.q.children, 'u');
   });
 
+
   it('should have a find node function', () => {
     const completion = new CompleteMe();
     const text = '/usr/share/dict/words';
@@ -153,7 +156,7 @@ describe('Trie, a.k.a completeMe', () => {
   });
 
 
-  it.skip('should have a select function that allows you to select suggestions', () => {
+  it('should have a select function that allows you to select suggestions', () => {
     const completion = new CompleteMe();
     const text = '/usr/share/dict/words';
 
@@ -167,7 +170,5 @@ describe('Trie, a.k.a completeMe', () => {
     assert.equal( completion.root.children.p.children.i.children.z.children.z.children.a.preference, 1);
 
   });
-
-
 
 });
