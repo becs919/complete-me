@@ -26,6 +26,14 @@ class CompleteMe {
 
 
   count () {
+    let currentNode = this.root;
+
+    if (currentNode.children) {
+      currentNode = currentNode.children;
+      if (currentNode.wordEnd === true) {
+        this.length++;
+      }
+    }
     return this.length;
   }
 
@@ -48,14 +56,9 @@ class CompleteMe {
 
   words (node, string) {
 
-    if (node.wordEnd && node.preference !== 0) {
-      console.log('not 0');
-      this.suggestions.unshift(string);
-    } else if (node.wordEnd && node.preference === 0) {
-      console.log('is 0');
+    if (node.wordEnd) {
       this.suggestions.push(string);
     }
-
 
     let nodeKeys = Object.keys(node.children);
 
@@ -92,11 +95,6 @@ class CompleteMe {
     }
   }
 
-
-  selected (sugg) {
-    let node = this.find(sugg);
-    node.preference++;
-  }
 
 
 }

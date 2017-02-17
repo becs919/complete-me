@@ -3,8 +3,6 @@ class Node {
     this.data = data;
     this.children = {};
     this.wordEnd = false;
-    this.value = '';
-    this.preference = false;
   }
 }
 

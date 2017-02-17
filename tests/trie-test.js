@@ -59,17 +59,6 @@ describe('Trie, a.k.a completeMe', () => {
     assert.deepEqual(completion.suggestions, ['pizza']);
   });
 
-  it.skip('should have a words function', () => {
-    const completion = new CompleteMe();
-
-    completion.insert('pizza');
-    completion.insert('suh');
-
-    // console.log();
-    // completion.words(completion.root.children.p.children.i.children.z.children.z, 'pizz');
-
-    assert.deepEqual(completion.words(completion.root, 'p'), ['pizza']);
-  });
 
   it('should not return a match if there is not one', () => {
     const completion = new CompleteMe();
@@ -164,7 +153,7 @@ describe('Trie, a.k.a completeMe', () => {
   });
 
 
-  it('should have a select function that allows you to select suggestions', () => {
+  it.skip('should have a select function that allows you to select suggestions', () => {
     const completion = new CompleteMe();
     const text = '/usr/share/dict/words';
 
@@ -179,28 +168,6 @@ describe('Trie, a.k.a completeMe', () => {
 
   });
 
-
-  it.only('should have a select function that allows you to select suggestions', () => {
-    const completion = new CompleteMe();
-    const text = '/usr/share/dict/words';
-
-    let dictionary = fs.readFileSync(text).toString('utf-8').trim().split('\n');
-
-    completion.populate(dictionary);
-
-    completion.suggest('piz');
-
-    assert.deepEqual(completion.suggestions, ['pize', 'pizza', 'pizzeria', 'pizzicato', 'pizzle']);
-
-    completion.selected('pizza');
-    completion.suggest('piz')
-
-    assert.deepEqual(completion.suggestions, ['pizza', 'pize', 'pizzeria', 'pizzicato', 'pizzle']);
-
-    assert.isFunction(completion.selected);
-    assert.equal( completion.root.children.p.children.i.children.z.children.z.children.a.preference, 1);
-
-  });
 
 
 });
